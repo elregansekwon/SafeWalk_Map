@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kakao Map Test</title>
-  
-  <!-- 카카오맵 API 로딩 -->
-  <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=9bcc075688cdc271c01c0903da628783&autoload=false"></script> <!-- autoload=false 추가 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오 지도 예제</title>
+    
+    <!-- 카카오맵 API 로딩 -->
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=9bcc075688cdc271c01c0903da628783"></script> <!-- 여기에 자신의 JavaScript 키를 입력하세요 -->
+    
+    <style>
+        #map {
+            width: 100%;
+            height: 400px; /* 지도의 높이 */
+        }
+    </style>
 </head>
 <body>
-  <h1>카카오 맵 테스트</h1>
-  <div id="map" style="width:100%;height:400px;"></div>
+    <h1>카카오 지도 예제</h1>
+    <div id="map"></div> <!-- 지도를 표시할 div -->
+    
+    <script>
+        // 지도 생성 옵션 설정
+        var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+        var mapOptions = {
+            center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울의 위도, 경도
+            level: 3 // 확대 수준
+        };
 
-  <script>
-    // 카카오 맵 API 로딩 후 초기화
-    Kakao.maps.load(function() { // 카카오 맵 API가 완전히 로드된 후 실행됩니다.
-      // 카카오 맵 API 초기화 코드
-      var mapContainer = document.getElementById('map');
-      
-      // 지도 옵션 설정
-      var mapOption = { 
-          center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울의 위도, 경도 (서울시청)
-          level: 3 // 지도 확대 수준
-      };
-      
-      // 카카오맵 객체 생성
-      var map = new kakao.maps.Map(mapContainer, mapOption);
-    });
-  </script>
+        // 카카오 지도 생성
+        var map = new kakao.maps.Map(mapContainer, mapOptions);
+
+        // 커스텀 마커 추가 예제
+        var markerPosition = new kakao.maps.LatLng(37.5665, 126.9780); // 마커 위치
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+        marker.setMap(map); // 마커를 지도에 추가
+    </script>
 </body>
 </html>
