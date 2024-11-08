@@ -42,11 +42,12 @@
 
         // 카카오맵 확대/축소 및 중심 변경 이벤트 동기화
         function syncMapView() {
-            var zoomLevel = map.getLevel(); // 카카오맵의 확대 수준
+            var kakaoLevel = map.getLevel(); // 카카오맵의 확대 수준
+            var olZoomLevel = 19 - kakaoLevel; // OpenLayers 확대 수준으로 변환 (반전)
             var center = map.getCenter(); // 카카오맵의 중심 좌표
-            var lonLat = new ol.proj.transform([center.getLng(), center.getLat()], 'EPSG:4326', 'EPSG:3857'); // 좌표 변환
+            var lonLat = ol.proj.fromLonLat([center.getLng(), center.getLat()]); // 좌표 변환
 
-            openLayersMap.getView().setZoom(zoomLevel); // OpenLayers 지도 확대 수준 설정
+            openLayersMap.getView().setZoom(olZoomLevel); // OpenLayers 지도 확대 수준 설정
             openLayersMap.getView().setCenter(lonLat); // OpenLayers 지도 중심 설정
         }
 
@@ -84,13 +85,12 @@
             layers: [wmsLayer], // OpenLayers의 레이어 추가
             view: new ol.View({
                 center: ol.proj.fromLonLat([126.9780, 37.5665]), // 서울의 위도, 경도
-                zoom: 12 // 초기 확대 레벨
+                zoom: 16 // 초기 확대 레벨
             })
         });
 
         // 지도 초기 동기화
         syncMapView(); // 페이지 로드 시 카카오맵과 OpenLayers의 뷰 동기화
-
     </script>
 </body>
 </html>
